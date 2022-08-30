@@ -1,0 +1,10 @@
+.Form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.Input {
+  width: 90%;
+}
