@@ -11,11 +11,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const loginRouter = require('./routes/login');
-const todoListRouter = require('./routes/todolist');
+// const todoListRouter = require('./routes/todolist');
 const userRouter = require('./routes/user');
 const noticeRouter = require('./routes/notice');
+const homeRouter = require('./routes/home');
 
-app.use('/', todoListRouter);
+app.use('/', homeRouter);
+// app.use('/', todoListRouter);
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/notice', noticeRouter);

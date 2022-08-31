@@ -13,7 +13,7 @@ export const Login = `
 export const giveLoginFunction = () => {
   const button = document.getElementById('loginBtn');
   button.addEventListener('click', () => {
-    window.history.pushState('', '', '/home');
+    location.href = 'http://localhost:3000/login/github/start';
     renderContents();
   });
 };
