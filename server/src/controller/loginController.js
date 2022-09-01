@@ -32,7 +32,8 @@ exports.githubLoginWithServer = async (req, res) => {
       },
     })
   ).json();
-  if (!('access_token' in tokenRequest)) return res.redirect('/login');
+  // if (!('access_token' in tokenRequest)) return res.redirect('/login');
+  if (!('access_token' in tokenRequest)) console.log('why');
   const apiUrl = 'https://api.github.com';
   const { access_token } = tokenRequest;
   const userData = await (
@@ -53,6 +54,9 @@ exports.githubLoginWithServer = async (req, res) => {
     });
     req.session.loggedIn = true;
     req.session.loggedUser = user;
-    res.redirect('http://localhost:8080/home');
+    res.redirect('/');
   }
+  req.session.loggedIn = true;
+  req.session.loggedUser = existingUser;
+  res.redirect('/');
 };

@@ -1,5 +1,5 @@
 import TitleStyles from 'styles/module/home/title.module.css';
 
 export const Title = `
-  <h1 class=${TitleStyles.Title}>Wonse's TODO LIST</h1>
+  <h1 id="form_title" class=${TitleStyles.Title}></h1>
 `;
