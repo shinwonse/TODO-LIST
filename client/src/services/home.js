@@ -1,4 +1,5 @@
 import renderContents from 'lib/router';
+import { Item } from 'components/home/item';
 
 export const submitToDo = (e) => {
   // 새로고침 막고
@@ -6,14 +7,18 @@ export const submitToDo = (e) => {
 
   // 사용자에게 받은 인풋을 newToDo 로 저장
   const toDoInput = document.querySelector('#todo_form input');
-  const newToDo = toDoInput.value;
+  if (toDoInput.value.trim().length !== 0) {
+    const newToDo = toDoInput.value;
+    paintToDo(newToDo);
+  }
   toDoInput.value = '';
-  paintToDo();
 };
 
-export const paintToDo = () => {
+export const paintToDo = (newToDo) => {
   const toDoList = document.getElementById('todo_list');
-  console.log(toDoList);
+  toDoList.insertAdjacentHTML('beforeend', Item);
+  const addedToDo = toDoList.querySelector('li:last-child');
+  addedToDo.querySelector('span').innerText = newToDo;
 };
 
 // 로그아웃
