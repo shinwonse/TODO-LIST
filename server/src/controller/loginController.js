@@ -54,9 +54,9 @@ exports.githubLoginWithServer = async (req, res) => {
     });
     req.session.loggedIn = true;
     req.session.loggedUser = user;
-    res.redirect('/');
+    res.redirect('/redirect');
   }
   req.session.loggedIn = true;
   req.session.loggedUser = existingUser;
-  res.redirect('/');
+  res.redirect('/redirect');
 };

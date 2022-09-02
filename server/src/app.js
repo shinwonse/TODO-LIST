@@ -11,10 +11,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const toDoRouter = require('./routes/todolist');
 const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
 const noticeRouter = require('./routes/notice');
-const homeRouter = require('./routes/home');
+const redirectRouter = require('./routes/redirect');
 
 const sessionObj = {
   secret: process.env.COOKIE_SECRET,
@@ -24,8 +25,9 @@ const sessionObj = {
 
 app.use(session(sessionObj));
 
-app.use('/', homeRouter);
 app.use('/login', loginRouter);
+app.use('/redirect', redirectRouter);
+app.use('/toDo', toDoRouter);
 app.use('/user', userRouter);
 app.use('/notice', noticeRouter);
 

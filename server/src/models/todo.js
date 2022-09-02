@@ -5,6 +5,10 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: String,
+    require: true,
+  },
 });
 
 const Todo = mongoose.model('Todo', TodoSchema);
