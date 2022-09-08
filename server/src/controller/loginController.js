@@ -50,13 +50,13 @@ exports.githubLoginWithServer = async (req, res) => {
   const existingUser = await User.findOne({ login: userData.login });
   if (!existingUser) {
     const user = await User.create({
-      login: userData.login,
+      nickname: userData.login,
     });
     req.session.loggedIn = true;
     req.session.loggedUser = user;
-    res.redirect('/redirect');
+    return res.redirect('/redirect');
   }
   req.session.loggedIn = true;
   req.session.loggedUser = existingUser;
-  res.redirect('/redirect');
+  return res.redirect('/redirect');
 };

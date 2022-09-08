@@ -22,4 +22,10 @@
   overflow: scroll;
   margin-top: 20px;
   margin-bottom: 30px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.List::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }

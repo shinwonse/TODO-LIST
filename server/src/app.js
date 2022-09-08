@@ -28,7 +28,7 @@ app.use(session(sessionObj));
 app.use('/login', loginRouter);
 app.use('/redirect', redirectRouter);
 app.use('/toDo', toDoRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 app.use('/notice', noticeRouter);
 
 app.listen(process.env.PORT || 3000, () => {

@@ -2,7 +2,7 @@ import { Form } from 'components/home/form';
 import { Title } from 'components/home/title';
 import HomeStyles from 'styles/module/home/home.module.css';
 import { searchParam } from 'lib/searchParam';
-import { logout, submitToDo } from 'services/home';
+import { fetchToDo, logout, submitToDo } from 'services/home';
 import { LogoutBtn } from 'components/home/logoutBtn';
 
 const topContents = Title + Form;
@@ -23,10 +23,10 @@ export const giveHomeFunction = () => {
   const homeWrapper = document.getElementById('home_wrapper');
   homeWrapper.insertAdjacentHTML('beforeend', LogoutBtn);
 
-  // login 파라미터를 찾아서 그 데이터를 TODO LIST title 에 넣는다
+  // nickname 파라미터를 찾아서 그 데이터를 TODO LIST title 에 넣는다
   const title = document.getElementById('form_title');
-  const login = searchParam('login');
-  title.innerText = `${login}'s TODO LIST`;
+  const nickname = searchParam('nickname');
+  title.innerText = `${nickname}'s TODO LIST`;
 
   // form 에 제출 이벤트리스너를 등록한다
   const form = document.getElementById('todo_form');
@@ -35,4 +35,7 @@ export const giveHomeFunction = () => {
   // 로그아웃 버튼에 로그아웃 이벤트 등록
   const logoutBtn = document.getElementById('logout_btn');
   logoutBtn.addEventListener('click', logout);
+
+  // 투두리스트의 아이템을 디비에서 가져온다.
+  fetchToDo(nickname);
 };
