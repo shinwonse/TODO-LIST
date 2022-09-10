@@ -1,17 +1,7 @@
 import 'styles/css/reset.css';
 import renderContents from 'lib/router';
 import routes from '../routes';
+import eventDelegation from './utils/eventDelegation';
 
+eventDelegation();
 renderContents(routes);
-
-// const handleDOMContentLoaded = () => {
-//   renderContents(routes);
-// };
-//
-// const handlePopstate = () => {
-//   renderContents(routes);
-// };
-//
-// window.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
-//
-// window.addEventListener('popstate', handlePopstate);

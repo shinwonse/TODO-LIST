@@ -1,4 +1,3 @@
-import renderContents from 'lib/router';
 import { Item } from 'components/home/item';
 
 export const fetchToDo = async () => {
@@ -45,12 +44,4 @@ export const paintToDo = (newToDo) => {
   toDoList.insertAdjacentHTML('beforeend', Item);
   const addedToDo = toDoList.querySelector('li:last-child');
   addedToDo.querySelector('span').innerText = newToDo;
-};
-
-// 로그아웃
-// 세션을 날리고 세션에 로그인된 유저가 있는지 확인하는 방식으로 구현해야 하는데
-// 아직 그 방법을 알지 못해서 임시로 가라로 구현함
-export const logout = () => {
-  history.pushState('', '', '/login');
-  renderContents();
 };
