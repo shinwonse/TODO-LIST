@@ -1,10 +1,17 @@
 import 'styles/css/reset.css';
 import renderContents from 'lib/router';
+import routes from '../routes';
 
-window.onload = () => {
-  renderContents();
-};
+renderContents(routes);
 
-window.addEventListener('popstate', () => {
-  renderContents();
-});
+// const handleDOMContentLoaded = () => {
+//   renderContents(routes);
+// };
+//
+// const handlePopstate = () => {
+//   renderContents(routes);
+// };
+//
+// window.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
+//
+// window.addEventListener('popstate', handlePopstate);

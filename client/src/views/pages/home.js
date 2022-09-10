@@ -1,23 +1,25 @@
 import { Form } from 'components/home/form';
 import { Title } from 'components/home/title';
 import HomeStyles from 'styles/module/home/home.module.css';
-import { searchParam } from 'lib/searchParam';
+import { searchParam } from '../../utils/searchParam';
 import { fetchToDo, logout, submitToDo } from 'services/home';
 import { LogoutBtn } from 'components/home/logoutBtn';
-
-const topContents = Title + Form;
+import { jsx } from '../../utils/jsx';
 
 export const Home = `
   <div id='home_wrapper' class=${HomeStyles.Wrapper}>
-    <div id='top_wrapper' class=${HomeStyles.Top}></div>
+    <div id='top_wrapper' class=${HomeStyles.Top}>
+      ${jsx`${Title}`}
+      ${jsx`${Form}`}
+    </div>
     <ul id='todo_list' class=${HomeStyles.List}></ul>
   </div>
 `;
 
 export const giveHomeFunction = () => {
   // toDoWrapper 에 필요한 component 들을 채워 넣음
-  const topWrapper = document.getElementById('top_wrapper');
-  topWrapper.innerHTML = topContents;
+  // const topWrapper = document.getElementById('top_wrapper');
+  // topWrapper.innerHTML = topContents;
 
   // 로그아웃 버튼을 넣음
   const homeWrapper = document.getElementById('home_wrapper');
