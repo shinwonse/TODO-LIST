@@ -10,7 +10,7 @@ const nickname = searchParam('nickname');
 
 const title = makeComponent(Title({ text: `${nickname}'s TODO-LIST` }));
 const form = makeComponent(Form);
-fetchToDo(nickname);
+// fetchToDo(nickname);
 
 export const Home = `
   <div id='home_wrapper' class=${HomeStyles.Wrapper}>
