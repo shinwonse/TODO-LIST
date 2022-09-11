@@ -1,4 +1,27 @@
 const { Todo } = require('../models/todo');
+const { User } = require('../models/user');
+
+exports.getTodo = (req, res) => {
+  const { id } = req.params;
+  Todo.findById(id)
+    .populate('User')
+    .then((data) => res.send(data));
+};
+
+exports.addTodo = (req, res) => {
+  const { id } = req.params;
+  Todo.create({
+    text: req.body.text,
+  })
+    .then((toDo) => {
+      return User.findOneAndUpdate(
+        { _id: id },
+        { $push: { toDos: toDo.id } },
+        { new: true, upsert: true }
+      );
+    })
+    .then((data) => res.send(data));
+};
 
 exports.createTodo = (req, res) => {
   const todo = new Todo({

@@ -13,7 +13,9 @@ exports.findAll = (req, res) => {
 };
 
 exports.findUser = (req, res) => {
-  User.findOne({ nickname: req.params.nickname })
+  const { id } = req.params;
+  User.findById(id)
+    .populate('toDos')
     .then((data) => {
       res.send(data);
     })
@@ -25,8 +27,12 @@ exports.findUser = (req, res) => {
 };
 
 exports.addToDo = (req, res) => {
-  User.updateOne(
-    { nickname: req.params.nickname },
-    { $push: { toDos: { text: req.params.toDo } } }
-  ).then((data) => res.send(data));
+  const { id } = req.params;
+  User.findByIdAndUpdate(id, {
+    $push: { toDos: {} },
+  }).then((data) => res.send(data));
+  // User.updateOne(
+  //   { nickname: req.params.nickname },
+  //   { $push: { toDos: { text: req.params.toDo } } }
+  // ).then((data) => res.send(data));
 };

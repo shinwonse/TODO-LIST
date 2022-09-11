@@ -5,12 +5,12 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: String,
-    require: true,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
 });
 
-const Todo = mongoose.model('Todo', TodoSchema);
+const Todo = mongoose.model('ToDo', TodoSchema);
 
 module.exports = { Todo };

@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Todo = require('../controller/todoController');
 
+router.get('/:id', Todo.getTodo);
+
+router.post('/:id', Todo.addTodo);
+
 // Create Todo
 router.post('/api/todo', Todo.createTodo);
 

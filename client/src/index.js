@@ -6,10 +6,5 @@ import eventDelegation from './utils/eventDelegation';
 eventDelegation();
 renderContents(routes);
 
-if (DEVELOPMENT) {
-  console.log('개발 모드');
-} else {
-  console.log('배포 모드');
-}
-// const message = `${APP_NAME} is running. (version: ${VERSION})`;
-// console.log(message);
+const test = `${API_SERVER_HOST}`;
+console.log(test);

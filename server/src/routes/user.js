@@ -6,9 +6,9 @@ const User = require('../controller/userController');
 router.get('/', User.findAll);
 
 // Get one User
-router.get('/:nickname', User.findUser);
+router.get('/:id', User.findUser);
 
 // Add User's toDo
-router.post('/:nickname/:toDo', User.addToDo);
+// router.post('/:id/:toDo', User.addToDo);
 
 module.exports = router;
