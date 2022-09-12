@@ -8,7 +8,4 @@ router.get('/', User.findAll);
 // Get one User
 router.get('/:id', User.findUser);
 
-// Add User's toDo
-// router.post('/:id/:toDo', User.addToDo);
-
 module.exports = router;
