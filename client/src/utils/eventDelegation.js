@@ -1,11 +1,5 @@
-import renderContents from 'lib/router';
-
 function login() {
-  location.href = 'http://localhost:3000/login/github/start';
-}
-
-function logout() {
-  console.log('로그아웃 구현 전!');
+  location.href = `${API_SERVER_HOST}/login/github/start`;
 }
 
 function eventDelegation() {
@@ -17,7 +11,9 @@ function eventDelegation() {
     if (clickedTarget.id === 'login_button') {
       login();
     } else if (clickedTarget.id === 'logout_button') {
-      logout();
+      fetch(`${API_SERVER_HOST}/logout`)
+        .then((res) => res.json())
+        .then((data) => console.log(data));
     }
   });
 

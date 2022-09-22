@@ -5,6 +5,3 @@ import eventDelegation from './utils/eventDelegation';
 
 eventDelegation();
 renderContents(routes);
-
-const test = `${API_SERVER_HOST}`;
-console.log(test);

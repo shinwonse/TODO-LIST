@@ -58,7 +58,7 @@ module.exports = (env) => {
           ? JSON.stringify(process.env.LOCAL_API_SERVER)
           : JSON.stringify(process.env.API_SERVER),
       }),
-      new webpack.EnvironmentPlugin({ DEV: 'on' }),
+      // new webpack.EnvironmentPlugin({ DEV: 'on' }),
     ],
     resolve: {
       alias: {
@@ -68,6 +68,7 @@ module.exports = (env) => {
         components: path.resolve('./src/views/components'),
         services: path.resolve('./src/services'),
         lib: path.resolve('./src/lib/'),
+        utils: path.resolve('./src/utils/'),
       },
     },
     devServer: {

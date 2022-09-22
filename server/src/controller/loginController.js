@@ -32,8 +32,6 @@ exports.githubLoginWithServer = async (req, res) => {
       },
     })
   ).json();
-  // if (!('access_token' in tokenRequest)) return res.redirect('/login');
-  if (!('access_token' in tokenRequest)) console.log('why');
   const apiUrl = 'https://api.github.com';
   const { access_token } = tokenRequest;
   const userData = await (
