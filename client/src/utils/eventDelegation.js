@@ -11,9 +11,9 @@ function eventDelegation() {
     if (clickedTarget.id === 'login_button') {
       login();
     } else if (clickedTarget.id === 'logout_button') {
-      fetch(`${API_SERVER_HOST}/logout`)
-        .then((res) => res.json())
-        .then((data) => console.log(data));
+      fetch(`${API_SERVER_HOST}/logout`).then(() => {
+        alert('Successfully Logout!');
+      });
     }
   });
 
