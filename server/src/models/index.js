@@ -9,7 +9,7 @@ const connect = () => {
 
 mongoose
   .connect(
-    `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/test`
+    `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/todo-list`
   )
   .then(() => console.log(`✅ Connected to DB`))
   .catch((e) => console.log(`❌ Error on DB connection: ${e}`));

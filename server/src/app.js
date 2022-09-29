@@ -12,18 +12,22 @@ app.use(
     secret: 'secret', // 쿠키 임의 변조 방지
     resave: false, // 세션에 변경사항이 없어도 항상 저장할지
     saveUninitialized: false,
+    name: 'login',
     store: MongoStore.create({
-      mongoUrl: `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/test`,
-      ttl: 14 * 24 * 60 * 60, // Time To Live
-      autoRemove: 'native', // when the session expires, the document in MongoDB will be removed automatically
+      mongoUrl: `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/todo-list`,
     }),
     cookie: {
-      maxAge: 365 * 24 * 60 * 60,
+      httpOnly: true,
     },
   })
 );
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:8080',
+    credentials: true,
+  })
+);
 
 const pageRouter = require('./routes/page');
 const toDoRouter = require('./routes/todolist');
