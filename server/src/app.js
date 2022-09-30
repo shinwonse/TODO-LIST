@@ -1,26 +1,39 @@
 const express = require('express');
-const app = express();
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const connect = require('./models');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const { MONGO_ID, MONGO_PW } = require('./config/mongodb');
+const redis = require('redis');
+const connectRedis = require('connect-redis');
 
-app.use(
-  session({
-    httpOnly: true, // 자바스크립트로 쿠키 조회를 하지 못하도록
-    secret: 'secret', // 쿠키 임의 변조 방지
-    resave: false, // 세션에 변경사항이 없어도 항상 저장할지
-    saveUninitialized: false,
-    name: 'login',
-    store: MongoStore.create({
-      mongoUrl: `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/todo-list`,
-    }),
-    cookie: {
-      httpOnly: true,
-    },
-  })
-);
+const app = express();
+
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient({
+  url: `redis://redis-11864.c265.us-east-1-2.ec2.cloud.redislabs.com:11864`,
+  username: 'default',
+  password: 'vk7VuSEQkatHzp4C0wBJjF7f5PSIh1x1',
+  legacyMode: true,
+});
+
+app.use(cookieParser('secret'));
+const sessionOption = {
+  resave: false,
+  saveUninitialized: true,
+  secret: 'secret',
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  name: 'login',
+  store: new RedisStore({ client: redisClient, prefix: 'session' }),
+};
+
+(async () => {
+  await redisClient.connect();
+})();
+
+app.use(session(sessionOption));
 
 app.use(
   cors({
