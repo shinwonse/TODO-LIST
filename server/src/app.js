@@ -1,18 +1,20 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const dotenv = require('dotenv');
 const connect = require('./models');
 const session = require('express-session');
 const redis = require('redis');
 const connectRedis = require('connect-redis');
 
+// dotenv.config();
 const app = express();
 
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient({
-  url: `redis://redis-11864.c265.us-east-1-2.ec2.cloud.redislabs.com:11864`,
-  username: 'default',
-  password: 'vk7VuSEQkatHzp4C0wBJjF7f5PSIh1x1',
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
   legacyMode: true,
 });
 
