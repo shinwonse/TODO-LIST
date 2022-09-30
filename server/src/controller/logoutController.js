@@ -5,4 +5,5 @@ exports.logout = (req, res) => {
     if (err) return err;
     res.end();
   });
+  console.log('test');
 };
