@@ -1,13 +1,11 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const connect = require('./models');
 const session = require('express-session');
 const redis = require('redis');
 const connectRedis = require('connect-redis');
 
-// dotenv.config();
 const app = express();
 
 const RedisStore = connectRedis(session);
