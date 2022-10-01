@@ -5,9 +5,9 @@ const connect = require('./models');
 const session = require('express-session');
 const redis = require('redis');
 const connectRedis = require('connect-redis');
+require('dotenv').config();
 
 const app = express();
-
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
