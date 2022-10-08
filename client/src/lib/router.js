@@ -1,12 +1,23 @@
-const root = document.getElementById('root');
+import { Login } from 'pages/login';
+import { Home } from 'pages/home';
 
-const renderContents = (routes) => {
-  const { pathname } = window.location;
+const routes = [
+  { path: '/login', component: Login },
+  { path: '/home', component: Home },
+];
+
+const Router = () => {
+  const path = location.pathname;
   routes.map((route) => {
-    if (route.path === pathname) {
-      root.innerHTML = route.component;
+    if (route.path === path) {
+      renderPage(route.component);
     }
   });
 };
 
-export default renderContents;
+const renderPage = (component) => {
+  const root = document.getElementById('root');
+  root.innerHTML = component;
+};
+
+export default Router;

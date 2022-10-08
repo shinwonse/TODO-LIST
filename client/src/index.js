@@ -1,7 +1,4 @@
 import 'styles/css/reset.css';
-import renderContents from 'lib/router';
-import routes from '../routes';
-import { eventDelegation } from './utils/eventDelegation';
+import Router from 'lib/router';
 
-eventDelegation();
-renderContents(routes);
+Router();
