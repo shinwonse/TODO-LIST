@@ -6,6 +6,10 @@ const routes = [
   { path: '/home', component: Home },
 ];
 
+/* 초기 페이지를 home 으로 설정하고
+ * home 은 인증이 필요하므로
+ * 인증 없을 시 로그인 페이지로 리다이렉트
+ * */
 const Router = () => {
   const path = location.pathname;
   routes.map((route) => {
@@ -20,4 +24,4 @@ const renderPage = (component) => {
   root.innerHTML = component;
 };
 
-export default Router;
+export { Router };
