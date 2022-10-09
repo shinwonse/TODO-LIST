@@ -4,7 +4,3 @@ import { eventDelegation } from 'utils/eventDelegation';
 
 Router();
 eventDelegation();
-
-function getUserData() {
-  fetch('https://api.github.com/user');
-}
