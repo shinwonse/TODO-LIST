@@ -1,13 +1,14 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const connect = require('./models');
-const session = require('express-session');
-const redis = require('redis');
-const connectRedis = require('connect-redis');
-require('dotenv').config();
-
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
+const session = require("express-session");
+const redis = require("redis");
+const connectRedis = require("connect-redis");
+require("dotenv").config();
+
+const { MONGO_ID, MONGO_PW } = require("./config/mongodb");
+
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
@@ -16,52 +17,44 @@ const redisClient = redis.createClient({
   legacyMode: true,
 });
 
-app.use(cookieParser('secret'));
 const sessionOption = {
   resave: false,
   saveUninitialized: true,
-  secret: 'secret',
+  secret: "secret",
   cookie: {
     httpOnly: true,
     secure: false,
   },
-  name: 'login',
-  store: new RedisStore({ client: redisClient, prefix: 'session' }),
+  name: "auth",
+  store: new RedisStore({ client: redisClient, prefix: "auth" }),
 };
 
-(async () => {
-  await redisClient.connect();
-})();
+redisClient.connect();
+// (async () => {
+//   await redisClient.connect();
+// })();
 
 app.use(session(sessionOption));
 
 app.use(
   cors({
-    origin: 'http://localhost:8080',
+    origin: "http://localhost:8080",
     credentials: true,
   })
 );
 
-const pageRouter = require('./routes/page');
-const toDoRouter = require('./routes/todolist');
-const loginRouter = require('./routes/login');
-const logoutRouter = require('./routes/logout');
-const userRouter = require('./routes/user');
-const noticeRouter = require('./routes/notice');
-const redirectRouter = require('./routes/redirect');
-const profileRouter = require('./routes/profile');
+const userRouter = require("./routes/user");
+const oauthRouter = require("./routes/oauth");
+app.use("/oauth", oauthRouter);
+app.use("/users", userRouter);
 
-app.use('/', pageRouter);
-app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
-app.use('/redirect', redirectRouter);
-app.use('/toDo', toDoRouter);
-app.use('/users', userRouter);
-app.use('/notice', noticeRouter);
-app.use('/profile', profileRouter);
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log('listening!');
+app.listen(3000, () => {
+  console.log("listening!");
 });
 
-connect();
+mongoose
+  .connect(
+    `mongodb+srv://${MONGO_ID}:${MONGO_PW}@todo-list.mc8pohc.mongodb.net/todo-list`
+  )
+  .then(() => console.log(`✅ Connected to DB`))
+  .catch((e) => console.log(`❌ Error on DB connection: ${e}`));

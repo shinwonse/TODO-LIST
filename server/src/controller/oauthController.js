@@ -1,12 +1,12 @@
-const { User } = require('../models/user');
-const fetch = require('node-fetch');
-require('dotenv').config();
+const { User } = require("../models/user");
+const fetch = require("node-fetch");
+require("dotenv").config();
 
-exports.githubLoginPage = (req, res) => {
-  const baseUrl = 'https://github.com/login/oauth/authorize';
+exports.getAuthCode = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
     client_id: process.env.GH_ID,
-    scope: 'user',
+    scope: "user",
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
@@ -14,9 +14,9 @@ exports.githubLoginPage = (req, res) => {
   res.redirect(finalUrl);
 };
 
-exports.githubLoginWithServer = async (req, res) => {
+exports.postToken = async (req, res) => {
   const { code } = req.query;
-  const baseUrl = 'https://github.com/login/oauth/access_token';
+  const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_ID,
     client_secret: process.env.GH_SECRET,
@@ -26,16 +26,16 @@ exports.githubLoginWithServer = async (req, res) => {
   const finalUrl = `${baseUrl}?${params}`;
   const tokenRequest = await (
     await fetch(finalUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     })
   ).json();
   /* 여기까지 액세스 토큰 얻었고
    *  이제 유저 정보를 요청함
    *  */
-  const apiUrl = 'https://api.github.com';
+  const apiUrl = "https://api.github.com";
   const { access_token } = tokenRequest;
   const userData = await (
     await fetch(`${apiUrl}/user`, {
@@ -57,9 +57,16 @@ exports.githubLoginWithServer = async (req, res) => {
     });
     req.session.loggedIn = true;
     req.session.loggedUser = user;
-    return res.redirect('/redirect');
+    return res.redirect("/oauth/redirect");
   }
   req.session.loggedIn = true;
   req.session.loggedUser = existingUser;
-  return res.redirect('/redirect');
+  return res.redirect("/oauth/redirect");
+};
+
+exports.redirect = (req, res) => {
+  const data = req.session.loggedUser;
+  // 쿼리 스트링 방식이 아니라
+  const string = encodeURIComponent(data.nickname);
+  res.redirect("http://localhost:8080/home?nickname=" + string);
 };
