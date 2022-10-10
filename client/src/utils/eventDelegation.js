@@ -1,11 +1,16 @@
+import { push } from 'lib/router';
+import axios from 'axios';
+
 function login() {
-  location.href = `${API_SERVER_HOST}/login/github/start`;
+  location.href = `${API_SERVER_HOST}/oauth/authCode/`;
 }
 
 function logout() {
-  fetch(`${API_SERVER_HOST}/logout`, {
-    credentials: 'include',
-  }).then(() => (location.href = '/login'));
+  axios
+    .delete(`${API_SERVER_HOST}/users`, {
+      withCredentials: true,
+    })
+    .then(() => push('/login'));
 }
 
 export function eventDelegation() {
@@ -16,6 +21,8 @@ export function eventDelegation() {
       login();
     } else if (clickedTarget.id === 'logout_button') {
       logout();
+    } else if (clickedTarget.id === 'test') {
+      push('/test');
     }
   });
 

@@ -1,24 +1,50 @@
 import { Login } from 'pages/login';
 import { Home } from 'pages/home';
+import { Test } from 'pages/test';
 
-const routes = {
-  '/home': Home,
-  '/login': Login,
+// {
+// path: string,
+// component: Component?,
+// redirect: string?,
+// }
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/home',
+  },
+  {
+    path: '/home',
+    component: Home,
+    auth: true,
+  },
+  {
+    path: '/login',
+    component: Login,
+    auth: false,
+  },
+  {
+    path: '/test',
+    component: Test,
+  },
+];
+
+const init = () => {
+  window.addEventListener('popstate', () => {
+    const component = getRoute();
+    renderPage(component);
+  });
+  const route = findRoute();
+  push(route.path);
 };
 
-/* 초기 페이지를 home 으로 설정하고
- * home 은 인증이 필요하므로
- * 인증 없을 시 로그인 페이지로 리다이렉트
- * */
-const Router = () => {
-  const view = routes[location.pathname];
+const findRoute = () => {
+  return routes.find((route) => route.path === location.pathname);
+};
 
-  if (view) {
-    renderPage(view);
-  } else {
-    history.replaceState('', '', '/login');
-    Router();
-  }
+const getRoute = () => {
+  const route = findRoute();
+  return route.component;
 };
 
 const renderPage = (component) => {
@@ -26,4 +52,19 @@ const renderPage = (component) => {
   root.innerHTML = component;
 };
 
-export { Router };
+const push = (path, data) => {
+  history.pushState(data, null, path);
+  const { auth, redirect, component } = findRoute();
+  // todo: auth 확인 필요
+  if (auth) {
+    // store 확인
+    // auth 필요, auth 가지고 있나 없나
+  }
+  if (redirect) {
+    push(redirect, data);
+    return;
+  }
+  renderPage(component);
+};
+
+export { init, push };

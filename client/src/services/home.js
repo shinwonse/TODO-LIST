@@ -1,7 +1,7 @@
 import { Item } from 'components/home/item';
 
 export const fetchToDo = async () => {
-  const userResponse = await fetch(`http://localhost:3000/users/shinwonse`);
+  const userResponse = await fetch(`http://${API_SERVER_HOST}/users`);
   const user = await userResponse.json();
   const toDos = user?.toDos;
   const toDoList = document.getElementById('todo_list');

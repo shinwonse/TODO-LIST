@@ -6,5 +6,6 @@ export const Login = `
       <button onclick="loginTest()" type="button" id="login_button" class=${LoginStyle.Button}>
         Login with GitHub
       </button>
+      <button id="test">Test Button</button>
   </div>
 `;
