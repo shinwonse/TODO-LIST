@@ -1,13 +1,20 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
-const session = require("express-session");
-const redis = require("redis");
-const connectRedis = require("connect-redis");
-require("dotenv").config();
+const session = require('express-session');
+const redis = require('redis');
+const connectRedis = require('connect-redis');
+require('dotenv').config();
 
-const { MONGO_ID, MONGO_PW } = require("./config/mongodb");
+const { MONGO_ID, MONGO_PW } = require('./config/mongodb');
+
+app.use(
+  cors({
+    origin: 'http://localhost:8080',
+    credentials: true,
+  })
+);
 
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient({
@@ -20,36 +27,31 @@ const redisClient = redis.createClient({
 const sessionOption = {
   resave: false,
   saveUninitialized: true,
-  secret: "secret",
+  secret: 'secret',
   cookie: {
     httpOnly: true,
     secure: false,
   },
-  name: "auth",
-  store: new RedisStore({ client: redisClient, prefix: "auth" }),
+  name: 'auth',
+  store: new RedisStore({ client: redisClient, prefix: 'auth' }),
 };
 
-redisClient.connect();
-// (async () => {
-//   await redisClient.connect();
-// })();
+(async () => {
+  await redisClient.connect();
+})();
 
 app.use(session(sessionOption));
 
-app.use(
-  cors({
-    origin: "http://localhost:8080",
-    credentials: true,
-  })
-);
+const userRouter = require('./routes/user');
+const oauthRouter = require('./routes/oauth');
+const authRouter = require('./routes/auth');
 
-const userRouter = require("./routes/user");
-const oauthRouter = require("./routes/oauth");
-app.use("/oauth", oauthRouter);
-app.use("/users", userRouter);
+app.use('/oauth', oauthRouter);
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
 
 app.listen(3000, () => {
-  console.log("listening!");
+  console.log('listening!');
 });
 
 mongoose
