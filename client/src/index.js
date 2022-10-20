@@ -1,12 +1,14 @@
 import * as router from 'lib/router';
-import * as store from 'lib/store';
 import { eventDelegation } from 'utils/eventDelegation';
 
 import 'styles/css/reset.css';
-import { fetchUser } from 'services/auth';
+import { Login } from 'pages/login';
 
-router.init();
-eventDelegation();
+const root = document.getElementById('root');
+root.innerHTML = Login;
+
+// router.init();
+// eventDelegation();
 
 // loading indicator 시작
 
